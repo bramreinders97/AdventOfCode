@@ -1,21 +1,14 @@
-from tqdm import tqdm
-
-
-class Map:
+class SourceToDestMap:
     def __init__(self):
-        self.range_dict = []
-        # self.map = np.arange(100) # Old
-        self.map = {}  # New
+        self.range_maps = []
 
     def add_range_map(self, map_to_add: dict):
-        self.range_dict.append(map_to_add)
+        self.range_maps.append(map_to_add)
 
-    def fill_specifics(self):
-        for range_dict in self.range_dict:
-            for i in tqdm(range(range_dict['range_length'])):
-                self.map[str(range_dict['source_range_start'] + i)] = \
-                    range_dict['destination_range_start'] + i
+    def get_destination(self, source: int) -> int:
+        for range_map in self.range_maps:
+            if range_map["source_range_start"] <= source < range_map["source_range_end"]:
+                return source + range_map["destination_delta"]
 
-    def get_full_map(self):
-        self.fill_specifics()
-        return self.map
+        # If no range map is found -> source == destination
+        return source

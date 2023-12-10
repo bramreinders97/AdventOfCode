@@ -1,6 +1,5 @@
-from .Map import Map
+from .Map import SourceToDestMap
 from typing import List
-from tqdm import tqdm
 
 
 class InputReader:
@@ -10,7 +9,7 @@ class InputReader:
         self.maps = []
 
     def read_input(self):
-        for line in tqdm(self.input):
+        for line in self.input:
             self.read_line(line)
 
     def read_line(self, line: str):
@@ -27,7 +26,7 @@ class InputReader:
             self.deal_with_seeds(line)
 
     def deal_with_map_title(self, line: str):
-        self.maps.append(Map())
+        self.maps.append(SourceToDestMap())
 
     def deal_with_seeds(self, line: str):
         self.seeds = line.split(' ')[1:]
@@ -36,14 +35,14 @@ class InputReader:
         [dest_range_start, source_range_start, range_len] = line.split(' ')
         curr_map = self.maps[-1]
         curr_map.add_range_map({
-            "destination_range_start": int(dest_range_start),
             "source_range_start": int(source_range_start),
-            "range_length": int(range_len)
+            "source_range_end": int(source_range_start) + int(range_len),
+            "destination_delta": int(dest_range_start) - int(source_range_start)
         })
         self.maps[-1] = curr_map
 
     def get_seeds(self) -> List[int]:
         return self.seeds
 
-    def get_maps(self) -> List[Map]:
+    def get_maps(self) -> List[SourceToDestMap]:
         return self.maps
