@@ -27,7 +27,6 @@ class Solver:
 
         for i in range(len(self.times)):
             race = Race(self.times[i], self.distances[i])
-            race.calc_num_beat_record()
 
             prod_beat_records = prod_beat_records * race.get_num_beat_record()
 
@@ -38,6 +37,4 @@ class Solver:
         distance = extract_str_from_list(self.distances)
 
         race = Race(time, distance)
-        race.calc_num_beat_record()
-
         return race.get_num_beat_record()
