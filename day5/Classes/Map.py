@@ -1,3 +1,6 @@
+from typing import List
+
+
 class SourceToDestMap:
     def __init__(self):
         self.range_maps = []
@@ -12,3 +15,6 @@ class SourceToDestMap:
 
         # If no range map is found -> source == destination
         return source
+
+    def get_range_maps(self) -> List[dict]:
+        return self.range_maps
